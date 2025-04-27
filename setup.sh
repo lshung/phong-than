@@ -8,4 +8,5 @@ docker run -d \
     --name pt-ctn \
     -p 3390:3390 \
     --env-file env \
+    --dns 8.8.8.8 \
     pt-img
