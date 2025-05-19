@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Build the image
+# Build image
 docker build -t pt-img .
 
-# Run the container
+# Khởi chạy container
 docker run -d \
     --name pt-ctn \
     -p 3390:3390 \
