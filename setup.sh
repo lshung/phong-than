@@ -1,12 +1,15 @@
 #!/bin/bash
 
+# Load các biến môi trường
+source .env
+
 # Build image
-docker build -t pt-img .
+docker build -t ${IMAGE_NAME} .
 
 # Khởi chạy container
 docker run -d \
-    --name pt-ctn \
-    -p 3390:3390 \
-    --env-file env \
+    --name ${CONTAINER_NAME} \
+    -p ${RDP_PORT}:3389 \
+    --env-file .env \
     --dns 8.8.8.8 \
-    pt-img
+    ${IMAGE_NAME}

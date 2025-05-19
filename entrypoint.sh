@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Đọc biến môi trường
-source /.env
-
 # Tạo người dùng nếu chưa tồn tại
 if ! id -u $USERNAME > /dev/null 2>&1; then
     useradd -m -G sudo -s /bin/bash $USERNAME && \
@@ -18,11 +15,6 @@ PT_DIR=/home/"$USERNAME"/PhongThan
 mkdir -p "$PT_DIR"
 chown -R "$USERNAME:$USERNAME" "$PT_DIR"
 cd "$PT_DIR"
-# Tải xuống autoupdate.zip
-if [ ! -f autoupdate.zip ]; then
-    sudo -u $USERNAME wget http://download.zing.vcdn.vn/download/fs3/fs3new/autoupdate.zip
-    sudo -u $USERNAME unzip autoupdate.zip
-fi
 # Cài đặt wine-mono
 if [ ! -f wine-mono-8.1.0-x86.msi ]; then
     sudo -u $USERNAME wget https://dl.winehq.org/wine/wine-mono/8.1.0/wine-mono-8.1.0-x86.msi
@@ -32,6 +24,11 @@ fi
 if [ ! -f wine-gecko-2.47.4-x86.msi ]; then
     sudo -u $USERNAME wget https://dl.winehq.org/wine/wine-gecko/2.47.4/wine-gecko-2.47.4-x86.msi
     sudo -u $USERNAME wine msiexec -i wine-gecko-2.47.4-x86.msi
+fi
+# Tải xuống autoupdate.zip
+if [ ! -f autoupdate.zip ]; then
+    sudo -u $USERNAME wget http://download.zing.vcdn.vn/download/fs3/fs3new/autoupdate.zip
+    sudo -u $USERNAME unzip autoupdate.zip
 fi
 
 # Dọn dẹp các phiên XRDP trước đó

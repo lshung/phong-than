@@ -1,8 +1,11 @@
 #!/bin/bash
 
+# Load các biến môi trường
+source .env
+
 # Xóa container
-docker stop pt-ctn
-docker rm pt-ctn
+docker stop ${CONTAINER_NAME}
+docker rm ${CONTAINER_NAME}
 
 # Xóa image
-docker rmi pt-img
+docker rmi ${IMAGE_NAME}

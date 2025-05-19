@@ -48,19 +48,14 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # Cấu hình XRDP
-RUN sed -i 's/port=3389/port=3390/g' /etc/xrdp/xrdp.ini && \
-    echo "xfce4-session" > /etc/skel/.xsession && \
+RUN echo "xfce4-session" > /etc/skel/.xsession && \
     echo "startxfce4" > /etc/xrdp/startwm.sh && \
     echo "xrandr --output Virtual-1 --mode 1600x900" >> /etc/xrdp/startwm.sh && \
     chmod +x /etc/xrdp/startwm.sh
 
-# Sao chép file env và start.sh
-COPY env /.env
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-
-# Mở cổng RDP
-EXPOSE 3390
+# Sao chép file entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Chạy script khởi động
-CMD ["/start.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
