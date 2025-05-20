@@ -14,8 +14,8 @@ fi
 # Load các biến môi trường
 source .env
 
-# Hàm cài đặt
-__setup() {
+# Hàm cài đặt container
+__setup_container() {
     # Kiểm tra image đã tồn tại
     if docker images --format '{{.Repository}}' | grep -q "^${IMAGE_NAME}$"; then
         echo "Image ${IMAGE_NAME} đã tồn tại!" 1>&2
@@ -31,17 +31,23 @@ __setup() {
     # Build image
     docker build -t ${IMAGE_NAME} .
 
-    # Khởi chạy container
+    # Khởi chạy container với giới hạn tài nguyên
     docker run -d \
         --name ${CONTAINER_NAME} \
         -p ${RDP_PORT}:3389 \
         --env-file .env \
+        --volume $(pwd):/app \
         --dns 8.8.8.8 \
+        --memory=${MAX_RAM} \
+        --memory-swap=${MAX_RAM} \
+        --cpus=${MAX_CPU} \
+        --shm-size=${SHM_SIZE} \
+        --restart unless-stopped \
         ${IMAGE_NAME}
 }
 
-# Hàm gỡ cài đặt
-__uninstall() {
+# Hàm gỡ cài đặt container
+__remove_container() {
     # Kiểm tra container có tồn tại
     if ! docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
         echo "Container ${CONTAINER_NAME} không tồn tại!" 1>&2
@@ -65,8 +71,8 @@ __update_repo() {
 # Hàm hiển thị menu
 __show_menu() {
     echo "=============== MENU ==============="
-    echo "1. Cài đặt"
-    echo "2. Gỡ cài đặt"
+    echo "1. Cài đặt container"
+    echo "2. Gỡ cài đặt container"
     echo "3. Cập nhật repo"
     echo "0. Thoát"
     echo "===================================="
@@ -76,8 +82,8 @@ __show_menu() {
 __handle_choice() {
     local choice=$1
     case $choice in
-        1) __setup ;;
-        2) __uninstall ;;
+        1) __setup_container ;;
+        2) __remove_container ;;
         3) __update_repo ;;
         0|q|quit|exit) echo "Tạm biệt!"; echo; exit 0 ;;
         *) echo "Lựa chọn không hợp lệ!" ;;
