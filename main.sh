@@ -31,12 +31,17 @@ __setup() {
     # Build image
     docker build -t ${IMAGE_NAME} .
 
-    # Khởi chạy container
+    # Khởi chạy container với giới hạn tài nguyên
     docker run -d \
         --name ${CONTAINER_NAME} \
         -p ${RDP_PORT}:3389 \
         --env-file .env \
         --dns 8.8.8.8 \
+        --memory=${MAX_RAM} \
+        --memory-swap=${MAX_RAM} \
+        --cpus=${MAX_CPU} \
+        --shm-size=${SHM_SIZE} \
+        --restart unless-stopped \
         ${IMAGE_NAME}
 }
 
