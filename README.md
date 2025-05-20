@@ -1,3 +1,5 @@
+Cài đặt game Phong Thần trên Linux sử dụng Docker, Wine và XRDP.
+
 ## Cài đặt
 1. Tạo file `.env` chứa các biến môi trường:
 ```bash
@@ -9,9 +11,9 @@ cp env.sample .env && chmod 600 .env
    - `RDP_PORT`: Cổng RDP (mặc định: **3390**)
    - `IMAGE_NAME`: Tên Docker image (mặc định: **pt-img**)
    - `CONTAINER_NAME`: Tên Docker container (mặc định: **pt-ctn**)
-3. Chạy lệnh:
+3. Chạy lệnh sau và chọn menu **Cài đặt**:
 ```bash
-bash setup.sh
+bash main.sh
 ```
 
 ## Kết nối
@@ -25,7 +27,7 @@ sudo dnf install remmina remmina-plugins-rdp
     - Password: ${PASSWORD}
 
 ## Gỡ cài đặt
-Để gỡ cài đặt, chạy lệnh:
+Chạy lệnh sau và chọn menu **Gỡ cài đặt**:
 ```bash
-bash uninstall.sh
+bash main.sh
 ```
