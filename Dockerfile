@@ -13,7 +13,6 @@ RUN apt-get update && \
     dbus-x11 \
     x11-xserver-utils \
     xrdp \
-    sudo \
     nano \
     tzdata \
     && apt-get clean \

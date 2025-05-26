@@ -2,7 +2,7 @@ Cài đặt game Phong Thần trên Linux sử dụng Docker, Wine và XRDP.
 
 Phù hợp để cắm máy, không phù hợp để chơi trực tiếp.
 
-## Cài đặt
+## Cài đặt container
 
 1. Tạo file `.env` chứa các biến môi trường:
 ```bash
@@ -19,9 +19,9 @@ cp env.sample .env && chmod 600 .env
     - `MAX_CPU`: Số lượng CPU tối đa (mặc định: **2**)
     - `SHM_SIZE`: Shared memory size (mặc định: **256m**)
 
-3. Chạy lệnh sau và chọn menu **Cài đặt container**:
+3. Chạy lệnh `./main.sh` và chọn menu **Cài đặt container** hoặc chạy lệnh:
 ```bash
-bash main.sh
+./main.sh --setup-container
 ```
 
 ## Kết nối
@@ -40,9 +40,17 @@ bash main.sh
 sudo dnf install remmina remmina-plugins-rdp
 ```
 
-## Gỡ cài đặt
+## Cài đặt và chơi game
 
-Chạy lệnh sau và chọn menu **Gỡ cài đặt container**:
+1. Trên màn hình Desktop, chạy file **Install** để tải và cài đặt game (chỉ cần chạy duy nhất 1 lần).
+
+2. Chạy file **AutoUpdate** hoặc **Game** trên màn hình Desktop để bắt đầu chơi.
+
+3. Khi chạy các shortcut trên lần đầu tiên thì sẽ hiện thông báo **Untrusted application launcher**, chọn **Mark Executable** để đánh dấu tin cậy, lần sau sẽ không hiện thông báo này nữa.
+
+## Gỡ cài đặt container
+
+Chạy lệnh `./main.sh` và chọn menu **Gỡ cài đặt container** hoặc chạy lệnh:
 ```bash
-bash main.sh
+./main.sh --remove-container
 ```
